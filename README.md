@@ -85,3 +85,15 @@ See [docs/pretraining.md](docs/pretraining.md) and [docs/finetuning.md](docs/fin
 - All scripts are Hydra entrypoints; any config value can be overridden at the
 	CLI with `key=value` syntax.
 - Always use the 'latest' checkpoint over the 'best'. This is because the scaling of some components increase over the course of the training, which causes total loss / reward to become worse.
+
+```bibtex
+@misc{FlexPath2026,
+  title         = {FlexPath: Learned Semantic Path Priors for Image-Based Planning},
+  author        = {Taehyoung Kim and Tim Sch{\"o}nbrod and David Eckel and Henri Mee{\ss}},
+  year          = {2026},
+  eprint        = {2026.00000},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CV},
+  url           = {https://arxiv.org/abs/2026.00000}
+}
+```
