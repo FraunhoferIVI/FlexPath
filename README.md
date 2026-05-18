@@ -1,5 +1,7 @@
 ## FlexPath: Learned Semantic Path Priors for Image-Based Planning
 
+![FlexPath architecture](resources/FrontFigure_v4.png)
+
 This repository contains:
 
 - Training code for Stage I (pretraining) and II (finetuning)
