@@ -86,6 +86,8 @@ See [docs/pretraining.md](docs/pretraining.md) and [docs/finetuning.md](docs/fin
 	CLI with `key=value` syntax.
 - Always use the 'latest' checkpoint over the 'best'. This is because the scaling of some components increase over the course of the training, which causes total loss / reward to become worse.
 
+
+## Citation
 ```bibtex
 @misc{FlexPath2026,
   title         = {FlexPath: Learned Semantic Path Priors for Image-Based Planning},
