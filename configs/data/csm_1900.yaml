@@ -1,0 +1,12 @@
+dataset:
+  source: "localzarr"
+  data_dir: "data/csm_1900"  # path to dir with train.npz / test.npz / validation.npz
+  image_height: 64
+  image_width: 64
+  shift_p: 0.0  # Test only set
+  diagonal_movements_at_obstacle: true
+  start_goal_included_in_label: true
+
+# Normalization parameters
+normalization:
+  use_simple_norm: true  # If true, uses (0,0,0) mean and (1,1,1) std

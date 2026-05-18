@@ -1,0 +1,25 @@
+# Training configuration for finetuning with differentiable reward function
+
+# Training hyperparameters
+hyperparams:
+  reward_f: "obstacle_v2"  # "obstacle_v2"
+  batch_size: 192
+  learning_rate: 1e-5
+  warmup_epochs: 0  # 2
+  cosine_decay_start: 0  # 25
+  end_lr: 1e-8  # 1e-8
+  total_epochs: 25
+  batches_per_epoch: 10000
+  adaptive_pixel_penalty_scaling: true
+  pixel_penalty_scaling_start_step:  0
+  pixel_penalty_scaling_start_val: 0.01 # 0.025  # 1 # 0.5 # 0.1  # 0.25
+  pixel_penalty_scaling_stop_val: 0.5  # 0.5 # 0.125
+  obstacle_penalty_scaling: 0.1
+
+# Strategy and hyperparameters related to exploration
+exploration:
+  strategy: "v0"
+  hyperparams:
+    add_pixel_ratio: 0.5  # 0.75
+    amount_of_pixels_added_removed: 2
+    decay: false

@@ -1,0 +1,16 @@
+# Actor dataset configuration
+dataset:
+  source: "localzarr"
+  data_dir: "data/VG_50k"  # path to dir with train.npz / test.npz / validation.npz
+  image_height: 64
+  image_width: 64
+  shift_p: 0.5  # Probability of shift augmentation (training only)
+  diagonal_movements_at_obstacle: false
+  start_goal_included_in_label: false
+
+# Normalization parameters
+normalization:
+  use_simple_norm: true  # If true, uses (0,0,0) mean and (1,1,1) std
+  # Custom norm params (used if use_simple_norm=false)
+  mean: [0.095, 0.095, 0.315]  # [24.22/255, 24.22/255, 80.36/255]
+  std: [0.134, 0.134, 0.440]   # [34.18/255, 34.18/255, 112.22/255]

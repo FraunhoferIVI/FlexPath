@@ -1,0 +1,98 @@
+# Main configuration file for pretraining
+defaults:
+  - model: unet_transformer  # pick from pretraining/model
+  - data: TMP_640k # from pretraining/data
+  - _self_
+
+# Hydra configuration - console logging only (file added in code)
+hydra:
+  output_subdir: null  # Don't create .hydra subdirectory
+  run:
+    dir: ${experiment.output_dir}  # Run in experiment directory (prevents logs in repo root)
+  hydra_logging:
+    # Disable Hydra's own logging to file
+    version: 1
+    formatters:
+      simple:
+        format: '[HYDRA] %(message)s'
+    handlers:
+      console:
+        class: logging.StreamHandler
+        formatter: simple
+        stream: ext://sys.stderr
+    root:
+      level: ERROR
+      handlers: [console]
+    disable_existing_loggers: false
+  job_logging:
+    # Application logging configuration (console only, file added later)
+    version: 1
+    formatters:
+      simple:
+        format: '%(asctime)s | %(levelname)s | %(name)s | %(message)s'
+        datefmt: '%H:%M:%S'
+    handlers:
+      console:
+        class: logging.StreamHandler
+        formatter: simple
+        stream: ext://sys.stdout
+    root:
+      level: INFO
+      handlers: [console]
+    disable_existing_loggers: false
+
+# Experiment settings
+experiment:
+  name: ${now:%Y%m%d_%H%M%S}_actor_${model.experiment_name}
+  output_dir: experiments/pretraining/${experiment.name}
+  seed: 1327455
+  device: cuda
+
+# Training settings
+training:
+  num_epochs: 250
+  batch_size: 512
+  learning_rate: 2.5e-5  # 0.000015
+  num_workers: 20 # 32  # 128
+  validation_epoch: 5
+  checkpoint_epoch: 5
+  class_imbalance: 0.95  # pos_weight for BCEWithLogitsLoss
+  gradient_clipping_by_norm: true  # Whether to apply gradient clipping with max_norm=1.0
+  ema_alpha: 0  # 0 if no ema
+  use_ppms: false  # use ppm labels for training (only transPath)
+  compile_model: true
+
+  optimizer:
+    type: adamw
+    weight_decay: 0.01
+    betas: [0.9, 0.999]
+    eps: 1e-8
+    fused: true
+
+  lr_schedule:
+    type: cosine
+    warmup_epochs: 1
+    cosine_decay_start_epoch: 10
+    eta_min: 1e-10
+    max_lr: 4e-4 # only for onecycle schedule
+
+  # Mixed precision training settings
+  use_mixed_precision: true  # Enable automatic mixed precision (AMP) for faster training
+  precision: bf16  # Options: "fp32" (full precision), "fp16" (half precision), "bf16" (bfloat16, requires Ampere+ GPUs)
+
+# Loss function
+loss:
+  type: BCEWithLogitsLoss  # options: {"BCEWithLogitsLoss", "Focal", "MSEWLL"}
+  apply_weighted_loss: true  # Whether to apply class weights. Focal loss always uses focal_alpha as class weight regardless of the apply_weighted_loss param.
+  focal_gamma: 0  # Gamma param for focal loss, only necessary when focal loss is actually used
+  focal_alpha: 0.95  # Alpha param for focal loss, only necessary when focal loss is actually used
+
+# Logging settings
+logging:
+  use_tensorboard: true
+  save_to_file: true  # Save training logs to file
+  file_name: "training.log"  # Log file name in experiment directory
+
+# Checkpoint settings
+checkpoint:
+  keep_last_n: 0  # Keep only best and latest (no numbered checkpoints)

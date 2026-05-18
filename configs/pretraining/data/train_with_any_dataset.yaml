@@ -1,0 +1,12 @@
+dataset:
+  source: "localzarr"
+  data_dir: "<TODO>"  # fill path to your dataset here, path to dir with train.npz / test.npz / validation.npz
+  image_height: 64
+  image_width: 64
+  shift_p: 0.0  # Dataset is already augmented (this shift augmentation will add complexity)
+  diagonal_movements_at_obstacle: true
+  start_goal_included_in_label: true
+
+# Normalization parameters
+normalization:
+  use_simple_norm: true 
