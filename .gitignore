@@ -1,0 +1,107 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# stuff
+job.sh
+runs.sh
+fastenv_depr
+rewardcache
+nohup.out
+bla.py
+bashruns
+data/
+staticreward
+todo.md
+imgs
+
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Archived legacy code
+.archived/
+
+# Experiments and outputs
+experiments/
+logs/
+runs/
+outputs/
+wandb/
+tb_logs/
+sac_tensorboard_log/
+
+# Checkpoints (DO NOT commit checkpoints to git)
+checkpoints/**/*.pth
+checkpoints/**/*.pth.tar
+checkpoints/**/*.zip
+checkpoints/**/*.ckpt
+*.ckpt
+*.pth
+*.pth.tar
+
+# Model files
+*.pt
+*.bin
+*.safetensors
+
+# Data
+# data/
+datasets/
+*.csv
+*.npy
+*.npz
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Hydra
+.hydra/
+multirun/
+
+# PyTorch
+lightning_logs/
+
+# Config overrides (personal configs)
+configs/local/
