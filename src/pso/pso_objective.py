@@ -90,7 +90,7 @@ class PSOObjective():
         # compile on demand
         if compile_reward_f:
             self.f = torch.compile(self.f)
-            logger.info(f"Reward function is marked for compilation.")
+            logger.info("Reward function is marked for compilation.")
     
     def get_available_reward_functions(self) -> Set:
 

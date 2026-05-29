@@ -39,7 +39,7 @@ class ResNetBlock(nn.Module):
         else:
             self.activation = nn.ReLU(inplace=True)
         
-        if out_channels == None:
+        if out_channels is None:
             # -> default behavior: keep channels if out_channels is not given
             out_channels = [in_channels for _ in range(self.num_convs)]
         elif type(out_channels) in {tuple, list}:

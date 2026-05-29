@@ -15,7 +15,6 @@ from src.models.policies.pso_training.training.nonreasoning import training, eva
 
 from src.models.policies.pso_training.schedule import get_pixel_penalty_schedule_linear
 
-from torch.utils.tensorboard import SummaryWriter
 
 from src.utils.checkpoint import CheckpointManager
 

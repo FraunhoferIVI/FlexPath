@@ -53,7 +53,6 @@ from src.models.policies.pso_training.actor_wrapper import PSOActorWrapper
 from src.data.dataset_factory import DatasetFactory
 from src.utils.lr_schedules import make_delayed_cosine_schedule
 
-import logging
 
 from src.utils.checkpoint_loader import (
     load_pretrained_actor,

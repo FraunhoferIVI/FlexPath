@@ -70,7 +70,7 @@ def load_actor_from_experiment(exp_dir: str, device: Optional[str] = None, use_b
             state_dict = checkpoint[state_dict_key]  # {k.replace("_orig_mod.", ""): v for k, v in checkpoint[state_dict_key].items()}
 
             # Load actor model
-            logger.info(f"Creating model...")
+            logger.info("Creating model...")
             model = get_actor_from_config(cfg)  # Updated to use unified registry
 
             model.load_state_dict(state_dict)

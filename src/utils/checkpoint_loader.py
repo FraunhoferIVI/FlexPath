@@ -22,6 +22,10 @@ import torch
 import torch.nn as nn
 from omegaconf import DictConfig
 
+from src.utils.model_registry import get_actor_from_config
+
+logger = logging.getLogger(__name__)
+
 
 def _get_default_device() -> str:
     """Determine the default device based on availability."""
@@ -31,11 +35,6 @@ def _get_default_device() -> str:
         return "mps"
     else:
         return "cpu"
-
-
-from src.utils.model_registry import get_actor_from_config
-
-logger = logging.getLogger(__name__)
 
 
 # ============================================================================
@@ -137,7 +136,7 @@ def infer_checkpoint_path(exp_dir: Union[str, Path], use_best: bool = True) -> P
             f"In directory: {checkpoint_dir}"
         )
         if available_checkpoints:
-            error_msg += f"\n\nAvailable checkpoints:\n"
+            error_msg += "\n\nAvailable checkpoints:\n"
             for ckpt in available_checkpoints:
                 error_msg += f"  - {ckpt.name}\n"
         else:
@@ -184,7 +183,7 @@ def load_pretrained_actor_from_experiment(
         load_pretrained_actor() for the OLD method with explicit params
     """
     exp_dir = Path(exp_dir)
-    logger.info(f"Loading actor from experiment directory (NEW auto-loading method)")
+    logger.info("Loading actor from experiment directory (NEW auto-loading method)")
     logger.info(f"  Experiment dir: {exp_dir}")
     logger.info(f"  Use best checkpoint: {use_best}")
 

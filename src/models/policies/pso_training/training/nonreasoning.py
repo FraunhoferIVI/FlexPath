@@ -1,20 +1,16 @@
 from typing import Callable, List, Tuple, Optional
 import torch
 import torch.nn as nn
-from torch.cuda.amp import GradScaler, autocast
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
 
-from torch.utils.data import DataLoader
 
 from torch.amp import autocast, GradScaler
 
 from src.models.policies.pso_training.logging import log_to_tensorboard
 
-from torch.utils.tensorboard import SummaryWriter
 
-from tqdm import tqdm
 
 
 
