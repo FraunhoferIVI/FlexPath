@@ -11,7 +11,7 @@ uv sync
 ## Download Checkpoints:
 
 ```bash
-curl -L -o experiments.zip https://owncloud.fraunhofer.de/index.php/s/1OkjP39nWU7bM3w/download
+curl -L -o experiments.zip https://owncloud.fraunhofer.de/index.php/s/pvO2lJaNFI1IOId/download
 unzip experiments.zip
 ```
 
