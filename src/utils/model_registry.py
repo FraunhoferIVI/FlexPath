@@ -15,16 +15,7 @@ from src.models.actor.unet_transformer import UnetTransformer
 # Actor Registry
 ACTOR_REGISTRY: Dict[str, Type[nn.Module]] = {
     "unet_transformer": UnetTransformer,
-}
-
-# Deprecated actor model names (for backward compatibility)
-DEPRECATED_ACTOR_NAMES = {
-    "PathFindingNetworkUNET2": "actor_unet_basic",
-    "ActorUnetAtt": "actor_rnt_m",
-    "ActorUnetAtt_s": "actor_rnt_s",
-    "ActorUnetAtt_L": "actor_rnt_l",
-    "ActorUnetAtt_T3": "actor_rnt_t3",
-    "ActorUnetCrossAttFuse": "actor_rn_cross_att",
+    "actor_rnt_s_4_transpath_equivalent": UnetTransformer,  # previous name, for backward compatibility
 }
 
 
@@ -48,17 +39,6 @@ def get_actor_from_config(config: DictConfig) -> nn.Module:
     if model_type not in ACTOR_REGISTRY:
         available = ", ".join(ACTOR_REGISTRY.keys())
         raise ValueError(f"Unknown actor model: '{model_type}'. " f"Available models: {available}")
-
-    # Warn if using deprecated name
-    if model_type in DEPRECATED_ACTOR_NAMES:
-        new_name = DEPRECATED_ACTOR_NAMES[model_type]
-        warnings.warn(
-            f"Actor model name '{model_type}' is deprecated and will be removed in a future release. "
-            f"Please use '{new_name}' instead. "
-            f"Update your config: model.type = '{new_name}'",
-            DeprecationWarning,
-            stacklevel=2
-        )
 
     model_class = ACTOR_REGISTRY[model_type]
     model_params = dict(config.model.params) if hasattr(config.model, "params") else {}

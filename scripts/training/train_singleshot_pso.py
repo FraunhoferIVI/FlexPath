@@ -173,13 +173,7 @@ def main(cfg: DictConfig):
         )
 
     actor_wrapper = PSOActorWrapper(
-        actor_model=actor_model,
-        exploration_strategy=cfg.training.exploration.strategy
-    )
-
-    # set exploration strategy hyperparams
-    actor_wrapper.modify_exploration_strategy_params(
-        **cfg.training.exploration.hyperparams
+        actor_model=actor_model
     )
 
     logger.info("✓ Actor ready for DRPG")
