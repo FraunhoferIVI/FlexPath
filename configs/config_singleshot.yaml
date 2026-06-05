@@ -1,7 +1,7 @@
 # Main configuration file
 defaults:
   - model/single_shot: drpg_singleshot
-  - training: drpg
+  - training: mindist
   - data: TMP_640k # from configs/data
   - _self_
 

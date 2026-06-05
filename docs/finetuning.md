@@ -48,6 +48,13 @@ Training config: configs/training/drpg.yaml
   hyperparameters.
 - training.exploration.*: exploration strategy and its hyperparameters.
 
+Objective-specific training overrides:
+
+- configs/training/mindist.yaml: shortest-paths objective
+- configs/training/obstacleavoidance.yaml: obstacle avoidance objective
+- configs/training/semanticavoidance.yaml: semantic obstacle avoidance objective
+- configs/training/waypoints.yaml: waypoints objective
+
 Dataset config: configs/data/*.yaml
 
 - dataset.source: hf, localnpz, or localzarr.
@@ -74,8 +81,15 @@ python scripts/training/train_singleshot_pso.py \
 Run with defaults:
 
 ```bash
-python scripts/training/train_singleshot_pso.py
+python scripts/training/train_singleshot_pso.py \
+  training=<name of training file for objective>
 ```
+Objective-specific training files:
+
+- configs/training/mindist.yaml: shortest-paths objective
+- configs/training/obstacleavoidance.yaml: obstacle avoidance objective
+- configs/training/semanticavoidance.yaml: semantic obstacle avoidance objective
+- configs/training/waypoints.yaml: waypoints objective
 
 Point to a pretrained actor:
 

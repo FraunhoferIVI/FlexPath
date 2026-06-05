@@ -37,6 +37,32 @@ source .venv/bin/activate
 pip install .
 ```
 
+### Download Checkpoints:
+
+```bash
+curl -L -o experiments.zip https://owncloud.fraunhofer.de/index.php/s/pvO2lJaNFI1IOId/download
+unzip experiments.zip
+```
+
+### Download Datasets
+
+```bash
+mkdir data
+cd data
+
+# TMP (512/64/64k)
+curl -L -o TMP_640k_rgb.zip https://owncloud.fraunhofer.de/index.php/s/Md4nGgqQCGrUii8/download
+unzip TMP_640k_rgb.zip
+
+# CSM 1.9k (test only)
+curl -L -o csm_1900.zip https://owncloud.fraunhofer.de/index.php/s/OdaJnfZwU1NGu4Z/download
+unzip csm_1900.zip
+
+# Starcraft 6k (test only)
+curl -L -o starcraft_6k.zip https://owncloud.fraunhofer.de/index.php/s/51Dc4CPEwtztXYd/download
+unzip starcraft_6k.zip
+```
+
 ### Repository layout (high level)
 
 - `scripts/pretraining/train_actor.py`: actor pretraining entrypoint

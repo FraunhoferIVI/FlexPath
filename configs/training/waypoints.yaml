@@ -1,0 +1,23 @@
+# Training hyperparameters
+hyperparams:
+    reward_f: reward_waypoint_mindist
+    batch_size: 128
+    learning_rate: 1.0e-05
+    warmup_epochs: 0
+    cosine_decay_start: 0
+    end_lr: 1.0e-08
+    total_epochs: 25
+    batches_per_epoch: 10000
+    adaptive_pixel_penalty_scaling: true
+    pixel_penalty_scaling_start_step: 0
+    pixel_penalty_scaling_start_val: 0.01
+    pixel_penalty_scaling_stop_val: 0.5
+    obstacle_penalty_scaling: 0.1
+
+# Strategy and hyperparameters related to exploration (not used anymore, strategy v0 = no exploration)
+exploration:
+  strategy: "v0"
+  hyperparams:
+    add_pixel_ratio: 0.5
+    amount_of_pixels_added_removed: 0
+    decay: false
