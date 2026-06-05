@@ -25,6 +25,7 @@ git clone ...
 
 ### Install dependencies
 
+**Python dependencies:**
 Option 1 (uv):
 ```bash
 uv sync
@@ -36,6 +37,11 @@ python -m venv .venv
 source .venv/bin/activate
 pip install .
 ```
+**Compilation dependencies:**:
+```bash
+apt install g++
+```
+(for torch.compile)
 
 ### Download Checkpoints:
 
