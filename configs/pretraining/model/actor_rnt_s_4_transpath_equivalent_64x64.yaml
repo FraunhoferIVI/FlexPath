@@ -1,0 +1,15 @@
+# Actor model configuration - ResNet+Transformer Small (4 encoder/decoder stages) with 4 transformer blocks at the bottleneck
+# Comparable size to the model used in transPath paper
+# Registry name: actor_rnt_s_4_transpath_equivalent
+
+type: actor_rnt_s_4_transpath_equivalent  # Registry name for model instantiation
+experiment_name: actor_rnt_s_4_transpath_equivalent  # For experiment tracking
+
+# Model parameters
+params:
+  in_channels: 3
+  out_channels: 1
+  base_dim: 64
+  resolution: 64
+  dropout_probability: 0.1
+  rgb: True

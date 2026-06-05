@@ -1,0 +1,18 @@
+type: iastar  # Registry name for model instantiation
+experiment_name: iastar  # For experiment tracking
+
+# Params follow the settings in the offical repo:
+# w param is taken from script default in https://github.com/sair-lab/iAstar/blob/main/train.py
+# all other params are from https://github.com/sair-lab/iAstar/blob/main/config/config.yaml
+
+# Model parameters
+params:
+  encoder_input: 3
+  encoder_arch: ActorRNT_S_4  # UNet
+  device: cuda
+  encoder_depth: 4
+  learn_obstacles: false
+  Tmax: 0.25
+  is_training: True
+  output_path_list: false
+  w: 2.0

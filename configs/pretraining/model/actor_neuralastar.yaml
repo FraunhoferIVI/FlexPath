@@ -1,0 +1,8 @@
+type: neuralastar  # Registry name for model instantiation
+experiment_name: neuralastar  # For experiment tracking
+
+# Params follow the settings in the offical repo: https://github.com/omron-sinicx/neural-astar/tree/473edbbd7d20df3e2440b55989f87e720be2d06e
+
+# Model parameters
+params:
+  Tmax: 0.25

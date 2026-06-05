@@ -1,0 +1,18 @@
+# config taken from https://github.com/AIRI-Institute/TransPath
+
+type: transpath_autoencoder  # Registry name for model instantiation
+experiment_name: transpath_autoencoder  # For experiment tracking
+
+
+# Model parameters
+params:
+  rgb: true
+  in_channels: 3
+  out_channels: 1
+  hidden_channels: 64
+  attn_blocks: 4
+  attn_heads: 4
+  cnn_dropout: 0.15
+  attn_dropout: 0.15
+  downsample_steps: 3
+  squash_logits: true  # whether to apply tanh to returned logits, set to false if training with sigmoid chained loss function (like BCEWLL or our focal loss implementation)

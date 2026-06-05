@@ -1,0 +1,96 @@
+# Pretraining config for the FlexPath actor baseline.
+defaults:
+  - model: actor_rnt_s_4_transpath_equivalent_64x64
+  - data: TMP_640k
+  - _self_
+
+hydra:
+  output_subdir: null
+  run:
+    dir: ${experiment.output_dir}
+  hydra_logging:
+    version: 1
+    formatters:
+      simple:
+        format: '[HYDRA] %(message)s'
+    handlers:
+      console:
+        class: logging.StreamHandler
+        formatter: simple
+        stream: ext://sys.stderr
+    root:
+      level: ERROR
+      handlers: [console]
+    disable_existing_loggers: false
+  job_logging:
+    version: 1
+    formatters:
+      simple:
+        format: '%(asctime)s | %(levelname)s | %(name)s | %(message)s'
+        datefmt: '%H:%M:%S'
+    handlers:
+      console:
+        class: logging.StreamHandler
+        formatter: simple
+        stream: ext://sys.stdout
+    root:
+      level: INFO
+      handlers: [console]
+    disable_existing_loggers: false
+
+model:
+  experiment_name: basemodel_640k_wbce
+
+data:
+  dataset:
+    data_dir: /home/jovyan/datagen/data/TMP_640k_rgb
+
+experiment:
+  name: ${now:%Y%m%d_%H%M%S}_actor_${model.experiment_name}
+  output_dir: experiments/pretraining/${experiment.name}
+  seed: 1327455
+  device: cuda
+
+training:
+  num_epochs: 250
+  batch_size: 512
+  learning_rate: 2.5e-5
+  num_workers: 32
+  validation_epoch: 5
+  checkpoint_epoch: 5
+  class_imbalance: 0.95
+  gradient_clipping_by_norm: true
+  ema_alpha: 0
+  use_ppms: false
+  compile_model: true
+
+  optimizer:
+    type: adamw
+    weight_decay: 0.01
+    betas: [0.9, 0.999]
+    eps: 1e-8
+    fused: true
+
+  lr_schedule:
+    type: cosine
+    warmup_epochs: 1
+    cosine_decay_start_epoch: 10
+    eta_min: 1e-10
+    max_lr: 4e-4
+
+  use_mixed_precision: true
+  precision: bf16
+
+loss:
+  type: BCEWithLogitsLoss
+  apply_weighted_loss: true
+  focal_gamma: 1
+  focal_alpha: 0.95
+
+logging:
+  use_tensorboard: true
+  save_to_file: true
+  file_name: "training.log"
+
+checkpoint:
+  keep_last_n: 0

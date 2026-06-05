@@ -1,0 +1,7 @@
+# VSAC model configuration with pretrained actor and critic
+name: vsac_singleshot
+
+actor:
+  # NEW format (recommended) - auto-loads params from experiment config
+  experiment_dir: experiments/pretraining/20260315_183845_actor_shape_noise_v3  # 20260313_164009_actor_noise_data_noaug  # experiments/important/basemodel_pretrained_640k  # experiments/pretraining/20260223_164118_actor_basemodel_640k_actualwbce  # experiments/important/basemodel_pretrained_640k  # 20260127_011142_actor_basemodel_640k_wbce
+  use_weights: true

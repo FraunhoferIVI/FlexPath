@@ -1,0 +1,56 @@
+# Main configuration file
+defaults:
+  - model/single_shot: drpg_singleshot
+  - training: drpg
+  - data: TMP_640k # from configs/data
+  - _self_
+
+# Hydra configuration - console logging only (file added in code)
+hydra:
+  output_subdir: null  # Don't create .hydra subdirectory
+  run:
+    dir: ${experiment.output_dir}  # Run in experiment directory (prevents logs in repo root)
+  hydra_logging:
+    # Disable Hydra's own logging to file
+    version: 1
+    formatters:
+      simple:
+        format: '[HYDRA] %(message)s'
+    handlers:
+      console:
+        class: logging.StreamHandler
+        formatter: simple
+        stream: ext://sys.stderr
+    root:
+      level: ERROR
+      handlers: [console]
+    disable_existing_loggers: false
+  job_logging:
+    # Application logging configuration (console only, file added later)
+    version: 1
+    formatters:
+      simple:
+        format: '%(asctime)s | %(levelname)s | %(name)s | %(message)s'
+        datefmt: '%H:%M:%S'
+    handlers:
+      console:
+        class: logging.StreamHandler
+        formatter: simple
+        stream: ext://sys.stdout
+    root:
+      level: INFO
+      handlers: [console]
+    disable_existing_loggers: false
+
+# Experiment settings
+experiment:
+  short_name: "DRPG"
+  description: ""
+  name: ${now:%Y%m%d_%H%M%S}_${experiment.short_name}
+  output_dir: experiments/runs/${experiment.name}
+  seed: 1327455
+  device: cuda
+
+# Checkpoint settings
+checkpoint: 
+  keep_last_n: 1

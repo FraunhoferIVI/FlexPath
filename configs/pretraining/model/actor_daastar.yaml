@@ -1,0 +1,42 @@
+type: daastar  # Registry name for model instantiation
+experiment_name: daastar
+
+# Model parameters
+params:
+  config:
+    dataset_name: aug_tmpd
+    enable_motion_planning_lib: false
+
+    Tmax: 0.25
+    g_ratio: 0.5
+    tb_factor: 0.001
+    expand_mode: max
+    enable_angle: True
+    enable_inv_rotation : null
+    enable_train_rotation_const: true
+    enable_train_g_ratio: true
+    num_dirs: 8
+    enable_norm_heuristic:
+
+    heuristic:
+      const: 1.0
+      enable_norm_heuristic: false
+
+    rotation:
+      const: 0.5
+
+    encoder:
+      input: m+
+      arch: UnetAtt
+      depth: -1
+      const: 10.0  
+
+    transpath:
+      path_loss_weight: 10.0
+      mask: false
+      mode: f
+      enable_gt_ppm: false
+      loss_mode: path+heat
+
+    params:
+      lr: 1e-4  # TODO find actual value
