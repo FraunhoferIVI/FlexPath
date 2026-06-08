@@ -4,7 +4,7 @@ BEFORE PUBLISH: update git clone link, cstar dependency link, citation
 
 | Optimal Paths                                 | Obstacle Avoidance                                  | Semantic Avoidance                                 | Waypoint                                       |
 | --------------------------------------------- | --------------------------------------------------- | -------------------------------------------------- | ---------------------------------------------- |
-| <img src="resources/optimal.gif" width="200"> | <img src="resources/obstavoidance.gif" width="200"> | <img src="resources/semavoidance.gif" width="200"> | <img src="resources/waypoint.gif" width="200"> |
+| <img src="resources/optimal.gif" width="180"> | <img src="resources/obstavoidance.gif" width="180"> | <img src="resources/semavoidance.gif" width="180"> | <img src="resources/waypoint.gif" width="180"> |
 
 
 <p align="center">
