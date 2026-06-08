@@ -1,9 +1,6 @@
 import numpy as np
 
-from pathfinding.core.grid import Grid
-from pathfinding.finder.a_star import AStarFinder
-from pathfinding.core.diagonal_movement import DiagonalMovement
-from pathfinding.core.heuristic import octile
+from cstar.pathfinding import run_astar_2D
 
 
 def compute_path_optimality(predicted_path_occupancy_map: np.ndarray, state: np.ndarray, diagonal_movements_at_obstacle: bool = False) -> tuple:
@@ -38,11 +35,6 @@ def compute_path_optimality(predicted_path_occupancy_map: np.ndarray, state: np.
         return True, False, False, None, None
 
     # run a* (heuristic: octile distance) on prediction
-    # octile guarantees optimality
-    if diagonal_movements_at_obstacle:
-        a_star_finder = AStarFinder(heuristic=octile, diagonal_movement=DiagonalMovement.always)
-    else:
-        a_star_finder = AStarFinder(heuristic=octile, diagonal_movement=DiagonalMovement.only_when_no_obstacle)
 
     # get start and goal position coordinates
     start_coordinates = np.argwhere((state == np.array([255, 76, 76])[None, None, :]).all(axis=-1))
@@ -59,22 +51,10 @@ def compute_path_optimality(predicted_path_occupancy_map: np.ndarray, state: np.
     predicted_path_occupancy_map[tuple(goal_coordinates)] = True
 
     # run a* on top of prediction
-    pred_grid = Grid(matrix=predicted_path_occupancy_map)
-    pred_grid_start = pred_grid.node(*(ind for ind in reversed(start_coordinates)))    # grid coordinates are flipped
-    pred_grid_goal = pred_grid.node(*(ind for ind in reversed(goal_coordinates)))
-
-    pred_waypoint_coordinates, pred_runs = a_star_finder.find_path(pred_grid_start, pred_grid_goal, pred_grid)
-
-    pred_cost = pred_grid_goal.g
+    pred_waypoint_coordinates, pred_cost, pred_runs, _ = run_astar_2D(predicted_path_occupancy_map, start_coordinates[0], start_coordinates[1], goal_coordinates[0], goal_coordinates[1])
     
     # run a* on whole map
-    label_grid = Grid(matrix=~obstacle_occupancy_map)  # 1: obstacle -> flip 
-    label_grid_start = label_grid.node(*(ind for ind in reversed(start_coordinates)))    # grid coordinates are flipped
-    label_grid_goal = label_grid.node(*(ind for ind in reversed(goal_coordinates)))
-
-    label_waypoint_coordinates, label_runs = a_star_finder.find_path(label_grid_start, label_grid_goal, label_grid)
-
-    label_cost = label_grid_goal.g
+    label_waypoint_coordinates, label_cost, label_runs, _ = run_astar_2D(~obstacle_occupancy_map, start_coordinates[0], start_coordinates[1], goal_coordinates[0], goal_coordinates[1])
 
     path_found = len(pred_waypoint_coordinates) > 0  # if no path was found then waypoints = []
 
