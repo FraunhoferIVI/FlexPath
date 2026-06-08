@@ -1,9 +1,9 @@
 [project]
-name = "training"
-version = "0.2.0"
+name = "FlexPath"
+version = "1.0.0"
 description = ""
 authors = [
-    { name = "Anonymous", email = "" },
+    { name = "Tim Schönbrod", email = "" },
 ]
 requires-python = ">=3.9, <3.10"
 readme = "README.md"
