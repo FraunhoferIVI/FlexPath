@@ -1,18 +1,31 @@
-## FlexPath: Learned Semantic Path Priors for Image-Based Planning
+# FlexPath: Learned Semantic Path Priors for Image-Based Planning
 
+BEFORE PUBLISH: update git clone link, cstar dependency link, citation
 
-# BEFORE PUBLISH: update git clone link, cstar dependency link, citation
+| Optimal Paths | Obstacle Avoidance | Semantic Avoidance | Waypoint |
+|-----------|-----------|-----------|-----------|
+| ![Optimal](resources/optimal.gif) | ![Obstacle Avoidance](resources/obstavoidance.gif) | ![Semantic Avoidance](resources/semavoidance.gif) | ![Waypoints](resources/waypoint.gif) |
 
+<p align="center">
+  <a href="#1-basic-setup">Setup</a> •
+  <a href="#2-pretraining-and-fine-tuning">Training</a> •
+  <a href="#3-evaluation">Evaluation</a> •
+  <a href="#4-extending-the-system">Extending</a> •
+  <a href="#citation">Citation</a>
+</p>
 
-![FlexPath architecture](resources/FrontFigure_v4.png)
+---
 
-This repository contains:
+## This Repository Contains
 
-- Training code for Stage I (pretraining) and II (finetuning)
-- Implementation of all PSOs
-- Basic evaluation scripts
+- ✅ Training code for Stage I (pretraining) and Stage II (fine-tuning)
+- ✅ Implementation of all PSOs
+- ✅ Basic evaluation scripts
 
-This branch is kept lightweight for easier extendability, see 'full' branch for baseline implementations and remaining evaluation scripts.
+> [!NOTE]
+> This branch is kept lightweight for easier extendability. See the `full` branch for baseline implementations and remaining evaluation scripts.
+
+---
 
 ## 1) Basic setup
 
