@@ -10,7 +10,8 @@ Train a neural network to predict *where paths can go* (Stage 1), then adapt it 
 |:-------:|:------------------:|:------------------:|:--------:|
 | <img src="resources/optimal.gif" width="180"> | <img src="resources/obstavoidance.gif" width="180"> | <img src="resources/semavoidance.gif" width="180"> | <img src="resources/waypoint.gif" width="180"> |
 
-> This shows fefsfse
+> The model predicts a heuristic in a single-shot fashion, then a classical search algorithms (Focal Search) navigates the map. Dark green nodes were expanded, the last frame shows the final path. Our heuristic strongly pushes the search algorithm towards the target with minimal expansions while aligning with the trained preference.
+
 <p align="center">
   <a href="#1-basic-setup">Setup</a> •
   <a href="#2-pretraining-and-fine-tuning">Training</a> •
