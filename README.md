@@ -1,18 +1,50 @@
-## FlexPath: Learned Semantic Path Priors for Image-Based Planning
+# FlexPath: Learned Semantic Path Priors for Image-Based Planning
 
+<!-- BEFORE PUBLISH: update git clone link, cstar dependency link, citation -->
 
-# BEFORE PUBLISH: update git clone link, cstar dependency link, citation
+<p align="center">
+  <img src="resources/FrontFigure_v4.png" alt="FlexPath architecture" width="85%"/>
+</p>
 
+<p align="center">
+  <a href="#1-basic-setup">Setup</a> •
+  <a href="#2-pretraining-and-fine-tuning">Training</a> •
+  <a href="#3-evaluation">Evaluation</a> •
+  <a href="#4-extending-the-system">Extending</a> •
+  <a href="#citation">Citation</a>
+</p>
 
-![FlexPath architecture](resources/FrontFigure_v4.png)
+---
 
-This repository contains:
+## Overview
 
-- Training code for Stage I (pretraining) and II (finetuning)
-- Implementation of all PSOs
-- Basic evaluation scripts
+**FlexPath** is a two-stage framework that decouples path *feasibility* from path *preference* for image-based planning:
 
-This branch is kept lightweight for easier extendability, see 'full' branch for baseline implementations and remaining evaluation scripts.
+1. **Stage I — Imitation Pretraining:** Learn a task-agnostic spatial prior over feasible paths from visual map inputs.
+2. **Stage II — PSO Fine-Tuning:** Adapt the prior toward task-specific criteria (shortest path, obstacle clearance, semantic avoidance, waypoint guidance) via differentiable *Path Shape Objectives* (PSOs) — without relearning path structure.
+
+### Key Results
+
+| Metric | FlexPath | TransPath |
+|--------|----------|-----------|
+| Expansion Ratio ↓ | **0.162** | 0.189 |
+| Optimal Found ↑ | **0.880** | 0.750 |
+| Hard Validity ↑ | **0.992** | 0.892 |
+
+> A single pretrained model adapted to multiple objectives with strong zero-shot generalization across three unseen domains.
+
+---
+
+## This Repository Contains
+
+- ✅ Training code for Stage I (pretraining) and Stage II (fine-tuning)
+- ✅ Implementation of all PSOs
+- ✅ Basic evaluation scripts
+
+> [!NOTE]
+> This branch is kept lightweight for easier extendability. See the `full` branch for baseline implementations and remaining evaluation scripts.
+
+---
 
 ## 1) Basic setup
 
