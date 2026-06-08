@@ -13,8 +13,8 @@ Train a neural network to predict *where paths can go* (Stage 1), then adapt it 
 > The model predicts a heuristic in a single-shot fashion, then a classical search algorithms (Focal Search) navigates the map. Dark green nodes were expanded, the last frame shows the final path. Our heuristic strongly pushes the search algorithm towards the target almost without unnecessary exploration, all while aligning with the trained preference.
 
 <p align="center">
-  <a href="#1-basic-setup">Setup</a> •
-  <a href="#2-pretraining-and-fine-tuning">Training</a> •
+  <a href="1-basic-setup">Setup</a> •
+  <a href="2-pretraining-and-fine-tuning">Training</a> •
   <a href="#3-evaluation">Evaluation</a> •
   <a href="#4-extending-the-system">Extending</a> •
   <a href="#citation">Citation</a>
@@ -33,6 +33,7 @@ Train a neural network to predict *where paths can go* (Stage 1), then adapt it 
 
 ---
 
+<a id="1-basic-setup"></a>
 <details>
 <summary>
 <h2>1) Basic setup</h2>
@@ -115,6 +116,7 @@ uv run python scripts/datagen/generate_waypoint_dataset.py
 
 </details>
 
+<a id="2-pretraining-and-fine-tuning"></a>
 <details>
 <summary>
 <h2>2) Pretraining and fine-tuning</h2>
