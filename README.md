@@ -35,7 +35,7 @@ Train a neural network to predict *where paths can go* (Stage 1), then adapt it 
 
 <details>
 <summary>
-<h1>1) Basic setup</h1>
+<h2>1) Basic setup</h2>
 </summary>
 
 ### Requirements
