@@ -1,5 +1,9 @@
 ## FlexPath: Learned Semantic Path Priors for Image-Based Planning
 
+
+# BEFORE PUBLISH: update git clone link, cstar dependency link, citation
+
+
 ![FlexPath architecture](resources/FrontFigure_v4.png)
 
 This repository contains:
