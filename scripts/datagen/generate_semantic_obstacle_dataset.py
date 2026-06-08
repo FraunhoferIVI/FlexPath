@@ -14,15 +14,15 @@ from src.utils.common import seed_everything
 def main():
     """Add additional obstacle levels to existing dataset splits.
 
-    The input .npz files must contain the arrays expected by
-    `sample_additional_obstacles` (see implementation for details).
+    The input .zarr stores must contain the arrays expected by
+    `sample_obstacles` (see implementation for details).
     """
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--input-dir",
         type=str,
         default="data/TMP_640k_rgb",
-        help="Directory containing input split .npz files.",
+        help="Directory containing input split .zarr stores.",
     )
     parser.add_argument(
         "--output-dir",
@@ -49,8 +49,8 @@ def main():
     splits = [s.strip() for s in args.splits.split(",") if s.strip()]
     for split in splits:
         sample_obstacles(
-            f"{args.input_dir}/{split}.npz",
-            f"{args.output_dir}/{split}.npz",
+            f"{args.input_dir}/{split}.zarr",
+            f"{args.output_dir}/{split}.zarr",
         )
 
 

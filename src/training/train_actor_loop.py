@@ -19,6 +19,8 @@ from src.utils.lr_schedules import create_scheduler_from_config
 from src.buffers.fast_dataset import FastDataloader
 from src.buffers.replay_buffer import CUDAPrefetcher
 
+from src.utils.metrics import compute_path_optimality
+
 
 from copy import deepcopy
 
@@ -431,22 +433,22 @@ def train_actor(model, train_dataset, val_dataset, config, device="cuda", diagon
                 # calculate path optimality metrics (does not support batches)
                 last_batch_size = len(pred_np)
                 valid_paths = 0  # count valid paths
-                # for i in range(last_batch_size):
-                #     is_collision, is_valid, is_optimal, cost_factor, expansion_ratio = compute_path_optimality(
-                #         predicted_path_occupancy_map=pred_np[i],
-                #         state=unnormalized_image_np[i],
-                #         diagonal_movements_at_obstacle=diagonal_movements_at_obstacle
-                #     )
+                for i in range(last_batch_size):
+                    is_collision, is_valid, is_optimal, cost_factor, expansion_ratio = compute_path_optimality(
+                        predicted_path_occupancy_map=pred_np[i],
+                        state=unnormalized_image_np[i],
+                        diagonal_movements_at_obstacle=diagonal_movements_at_obstacle
+                    )
 
-                #     path_optimality_metrics["is_collision"].append(is_collision)
-                #     path_optimality_metrics["is_valid"].append(is_valid)
+                    path_optimality_metrics["is_collision"].append(is_collision)
+                    path_optimality_metrics["is_valid"].append(is_valid)
 
-                #     # only use those metrics if path is valid
-                #     if is_valid:
-                #         path_optimality_metrics["is_optimal"].append(is_optimal)
-                #         path_optimality_metrics["cost_factor"].append(cost_factor)
-                #         path_optimality_metrics["expansion_ratio"].append(expansion_ratio)
-                #         valid_paths += 1
+                    # only use those metrics if path is valid
+                    if is_valid:
+                        path_optimality_metrics["is_optimal"].append(is_optimal)
+                        path_optimality_metrics["cost_factor"].append(cost_factor)
+                        path_optimality_metrics["expansion_ratio"].append(expansion_ratio)
+                        valid_paths += 1
 
                 # Count avg. number of path pixel predictions per sample
                 path_pixel_predictios = torch.sum(predicted).item() / predicted.shape[0]  # divide by batch dim of last batch

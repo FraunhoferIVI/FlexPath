@@ -1,5 +1,8 @@
 # FlexPath 2D
 
+This branch provides the full development repo with all utils and baselines. Documentation is tailored for evaluating and retraining all models (shortest-path objective). 
+If you want to only retrain, extend our model or work with the semantic objectives we recommend the **main** branch as it contains much more detailled on retraining and extending our model.
+
 ## Environment
 
 **Python dependencies:**
@@ -17,7 +20,7 @@ pip install .
 
 **Compilation dependencies:**:
 ```bash
-apt install g++
+apt install gcc
 ```
 (for torch.compile)
 
@@ -47,6 +50,15 @@ curl -L -o starcraft_6k.zip https://owncloud.fraunhofer.de/index.php/s/51Dc4CPEw
 unzip starcraft_6k.zip
 ```
 
+# Generate semantic dataset extensions
+
+This is only required if you want to retrain or evaluate the waypoint/semantic obstacle avoidance objectives.
+
+```bash
+uv run python scripts/datagen/generate_semantic_obstacle_dataset.py
+uv run python scripts/datagen/generate_waypoint_dataset.py
+```
+
 ## Retrain Our Model:
 
 **Pretraining:**
@@ -66,6 +78,8 @@ uv run python scripts/training/train_singleshot_dr.py \
   model.single_shot.actor.experiment_dir=<path to pretraining dir> \
   training=<name of training config file>
 ```
+
+Also set data.dataset.data_dir to the specific semantic dataset (only if you are training waypoints or semantic obstacle avoidance)
 
 ## Retraining Baselines
 

@@ -13,7 +13,7 @@ from src.differentiable_reward.reward_registry import REWARD_COMPONENTS
 from src.models.policies.drpg.sampling_wrapper import SamplingActor
 from src.utils.visualization import VisualisationCallback
 
-from src.models.policies.drpg.training.nonreasoning import training
+from src.models.policies.drpg.training.nonreasoning import training, evaluation
 
 from src.models.policies.drpg.schedule import get_pixel_penalty_schedule_linear
 
@@ -155,27 +155,12 @@ class DRPG(nn.Module):
         # ----------------------------------------------------------------------
         # Dataset + CUDA prefetching
         # ----------------------------------------------------------------------
-        # self.trainloader = CUDAPrefetcher(  # prefetcher loads data to gpu ahead of time
-        #     loader=ReplayBufferLoader(  # Samples with replacement
-        #         dataset=train_dataset,
-        #         batch_size=batch_size,
-        #         num_batches=eval_freq,
-        #     ),
-        #     device=device
-        # )
-
         self.trainloader = CUDAPrefetcher(  # prefetcher loads data to gpu ahead of time
             loader=ReplayBufferLoader(
                 dataset=train_dataset,
                 batch_size=batch_size,
                 num_batches=eval_freq
             ),
-            # loader=PrioritizedReplayBufferLoader(  # Samples with replacement
-            #     dataset=train_dataset,
-            #     batch_size=batch_size,
-            #     num_batches=eval_freq,
-            #     alpha=0.7
-            # ),
             device=device
         )
 
@@ -185,13 +170,6 @@ class DRPG(nn.Module):
                 batch_size=batch_size,
                 num_batches=len(eval_dataset) // batch_size
             ),
-            # loader=DataLoader(  # Samples without replacement, better for comparison
-            #     dataset=eval_dataset,
-            #     batch_size=batch_size,
-            #     shuffle=True,
-            #     pin_memory=True,
-            #     num_workers=4,
-            # ),
             device=device
         )
 
@@ -249,11 +227,12 @@ class DRPG(nn.Module):
         # ----------------------------------------------------------------------
         # Visualization callback
         # ----------------------------------------------------------------------
-        self.visualization = VisualisationCallback(
-            exp_name=exp_name,
-            logger=self.writer,
-            model_pred_f=self.policy,
-        )
+        self.visualization = None
+        # self.visualization = VisualisationCallback(
+        #     exp_name=exp_name,
+        #     logger=self.writer,
+        #     model_pred_f=self.policy,
+        # )
 
         # ----------------------------------------------------------------------
         # Checkpoint management
@@ -296,18 +275,18 @@ class DRPG(nn.Module):
         batches_in_epoch_train: int = len(self.trainloader)
 
         # Initial evaluation before any training
-        # evaluation(
-        #     policy=self.policy,
-        #     reward_f=self.reward_f,
-        #     evalloader=self.evalloader,
-        #     writer=self.writer,
-        #     device=self.device,
-        #     reward_components_map=self.reward_components_map,
-        #     step=0,
-        #     visualization=self.visualization,
-        #     amp_dtype=self.amp_dtype,
-        #     enable_amp=self.enable_amp,
-        # )
+        evaluation(
+            policy=self.policy,
+            reward_f=self.reward_f,
+            evalloader=self.evalloader,
+            writer=self.writer,
+            device=self.device,
+            reward_components_map=self.reward_components_map,
+            step=0,
+            visualization=self.visualization,
+            amp_dtype=self.amp_dtype,
+            enable_amp=self.enable_amp,
+        )
 
         for epoch in range(self.epochs):
 
@@ -333,18 +312,18 @@ class DRPG(nn.Module):
             # -------------------------
             # Evaluate
             # -------------------------
-            # mean_reward = evaluation(
-            #     policy=self.policy,
-            #     reward_f=self.reward_f,
-            #     evalloader=self.evalloader,
-            #     writer=self.writer,
-            #     device=self.device,
-            #     reward_components_map=self.reward_components_map,
-            #     step=(epoch + 1) * batches_in_epoch_train,
-            #     visualization=self.visualization,
-            #     amp_dtype=self.amp_dtype,
-            #     enable_amp=self.enable_amp,
-            # )
+            mean_reward = evaluation(
+                policy=self.policy,
+                reward_f=self.reward_f,
+                evalloader=self.evalloader,
+                writer=self.writer,
+                device=self.device,
+                reward_components_map=self.reward_components_map,
+                step=(epoch + 1) * batches_in_epoch_train,
+                visualization=self.visualization,
+                amp_dtype=self.amp_dtype,
+                enable_amp=self.enable_amp,
+            )
 
             # -------------------------
             # Checkpoint saving
