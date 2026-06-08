@@ -29,7 +29,7 @@ Train a neural network to predict *where paths can go* (Stage 1), then adapt it 
 - ✅ Basic evaluation scripts
 
 > [!NOTE]
-> This branch is kept lightweight for easier extendability. See the `full` branch for baseline implementations and remaining evaluation scripts.
+> This branch is kept lightweight for easier extendability. See the `full` branch for baseline implementations used in the paper.
 
 ---
 
