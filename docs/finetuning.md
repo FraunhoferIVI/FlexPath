@@ -30,6 +30,10 @@ Dataset Handling:
 
 ## Config overview
 
+General Note: The hyperparam **total_epochs** does not correspond to the 'standard' epoch, we do sampling without replacement, therefore each epoch contains **batches_per_epoch** steps and after each 'epoch' an evaluation is performed.
+
+Training Note: While we recommend training for the full 250k steps for full reproducibility, a shorter run of 50k steps with a higher learning rate of 4e-4 yields only slightly worse results.
+
 Top-level composition: configs/config_singleshot.yaml
 
 - defaults: picks the model, training, and data config.
@@ -46,7 +50,6 @@ Training config: configs/training/drpg.yaml
 - training.hyperparams.reward_f: PSO objective key from pso_registry.
 - training.hyperparams.total_epochs, batch_size, learning_rate: core training
   hyperparameters.
-- training.exploration.*: exploration strategy and its hyperparameters.
 
 Objective-specific training overrides:
 
