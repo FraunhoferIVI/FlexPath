@@ -53,7 +53,7 @@ training:
   num_epochs: 250
   batch_size: 512
   learning_rate: 2.5e-5  # 0.000015
-  num_workers: 20 # 32  # 128
+  num_workers: 8
   validation_epoch: 5
   checkpoint_epoch: 5
   class_imbalance: 0.95  # pos_weight for BCEWithLogitsLoss

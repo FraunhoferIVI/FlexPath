@@ -122,10 +122,11 @@ python scripts/training/train_singleshot_pso.py
 See [docs/evaluation.md](docs/evaluation.md) for how to run the evaluation
 script and interpret its outputs.
 
+Take a look at the notebooks folder for visualizations.
+
 ## 4) Extending the system
 
 See [docs/pretraining.md](docs/pretraining.md) and [docs/finetuning.md](docs/finetuning.md) on how to add new backbones, PSOs or datasets.
-
 
 ## Notes
 
