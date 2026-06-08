@@ -2,9 +2,9 @@
 
 BEFORE PUBLISH: update git clone link, cstar dependency link, citation
 
-<p align="center">
-  <img src="resources/FrontFigure_v4.png" alt="FlexPath architecture" width="85%"/>
-</p>
+| Optimal Paths | Obstacle Avoidance | Semantic Avoidance | Waypoint |
+|-----------|-----------|-----------|-----------|
+| ![Optimal](resources/optimal.gif) | ![Obstacle Avoidance](resources/obstavoidance.gif) | ![Semantic Avoidance](resources/semavoidance.gif) | ![Waypoints](resources/waypoint.gif) |
 
 <p align="center">
   <a href="#1-basic-setup">Setup</a> •
