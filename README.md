@@ -33,10 +33,10 @@ Train a neural network to predict *where paths can go* (Stage 1), then adapt it 
 
 ---
 
-<a id="1-basic-setup"></a>
 <details>
 <summary>
 <h2>1) Basic setup</h2>
+<a id="1-basic-setup"></a>
 </summary>
 
 ### Requirements
