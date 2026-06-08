@@ -2,9 +2,10 @@
 
 BEFORE PUBLISH: update git clone link, cstar dependency link, citation
 
-| Optimal Paths | Obstacle Avoidance | Semantic Avoidance | Waypoint |
-|-----------|-----------|-----------|-----------|
-| ![Optimal](resources/optimal.gif) | ![Obstacle Avoidance](resources/obstavoidance.gif) | ![Semantic Avoidance](resources/semavoidance.gif) | ![Waypoints](resources/waypoint.gif) |
+| Optimal Paths                                 | Obstacle Avoidance                                  | Semantic Avoidance                                 | Waypoint                                       |
+| --------------------------------------------- | --------------------------------------------------- | -------------------------------------------------- | ---------------------------------------------- |
+| <img src="resources/optimal.gif" width="250"> | <img src="resources/obstavoidance.gif" width="250"> | <img src="resources/semavoidance.gif" width="250"> | <img src="resources/waypoint.gif" width="250"> |
+
 
 <p align="center">
   <a href="#1-basic-setup">Setup</a> •
