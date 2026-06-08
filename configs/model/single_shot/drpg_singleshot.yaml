@@ -1,4 +1,3 @@
-# VSAC model configuration with pretrained actor and critic
 name: vsac_singleshot
 
 actor:
