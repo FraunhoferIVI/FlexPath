@@ -2,6 +2,11 @@
 
 BEFORE PUBLISH: update git clone link, cstar dependency link, citation
 
+## TL;DR
+
+FlexPath is a training algorithm that pretrains a task-independant prior and finetunes it using differentiable path shape objectives (PSO) to fit a range of different objectives.
+
+
 | Optimal Paths                                 | Obstacle Avoidance                                  | Semantic Avoidance                                 | Waypoint                                       |
 | --------------------------------------------- | --------------------------------------------------- | -------------------------------------------------- | ---------------------------------------------- |
 | <img src="resources/optimal.gif" width="180"> | <img src="resources/obstavoidance.gif" width="180"> | <img src="resources/semavoidance.gif" width="180"> | <img src="resources/waypoint.gif" width="180"> |
