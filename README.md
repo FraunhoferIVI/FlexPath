@@ -33,7 +33,10 @@ Train a neural network to predict *where paths can go* (Stage 1), then adapt it 
 
 ---
 
+<details>
+<summary>
 ## 1) Basic setup
+</summary>
 
 ### Requirements
 
@@ -109,6 +112,8 @@ uv run python scripts/datagen/generate_waypoint_dataset.py
 - `docs/`: detailed guides for pretraining, finetuning, and evaluation
 - `src/`: core code (datasets, models, PSO objectives, training loops)
 - `experiments/`: default output location for runs
+
+</details>
 
 ## 2) Pretraining and fine-tuning
 
