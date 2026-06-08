@@ -4,7 +4,7 @@ BEFORE PUBLISH: update git clone link, cstar dependency link, citation
 
 ## TL;DR
 
-Train a neural network to predict *where paths can go* (Stage 1), then cheaply adapt it to decide *which path you actually want* (Stage 2) — shortest, safest, semantic-aware, or waypoint-guided — all from the same pretrained model.
+Train a neural network to predict *where paths can go* (Stage 1), then cheaply adapt it to decide *which path you actually want* (Stage 2), shortest, safest, semantic-aware, or waypoint-guided, all from the same pretrained model.
 
 
 | Optimal Paths                                 | Obstacle Avoidance                                  | Semantic Avoidance                                 | Waypoint                                       |
