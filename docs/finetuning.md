@@ -91,6 +91,8 @@ Objective-specific training files:
 - configs/training/semanticavoidance.yaml: semantic obstacle avoidance objective
 - configs/training/waypoints.yaml: waypoints objective
 
+For the semantic objectives you need to point to the right dataset, add data=<dataset config file name>.
+
 Point to a pretrained actor:
 
 ```bash

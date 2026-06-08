@@ -39,7 +39,7 @@ pip install .
 ```
 **Compilation dependencies:**:
 ```bash
-apt install g++
+apt install gcc
 ```
 (for torch.compile)
 
@@ -67,6 +67,15 @@ unzip csm_1900.zip
 # Starcraft 6k (test only)
 curl -L -o starcraft_6k.zip https://owncloud.fraunhofer.de/index.php/s/51Dc4CPEwtztXYd/download
 unzip starcraft_6k.zip
+```
+
+# Generate semantic dataset extensions
+
+This is only required if you want to retrain or evaluate the waypoint/semantic obstacle avoidance objectives.
+
+```bash
+uv run python scripts/datagen/generate_semantic_obstacle_dataset.py
+uv run python scripts/datagen/generate_waypoint_dataset.py
 ```
 
 ### Repository layout (high level)
