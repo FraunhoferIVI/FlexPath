@@ -115,7 +115,10 @@ uv run python scripts/datagen/generate_waypoint_dataset.py
 
 </details>
 
-## 2) Pretraining and fine-tuning
+<details>
+<summary>
+<h2>2) Pretraining and fine-tuning</h2>
+</summary>
 
 ### Stage I (Pretraining)
 
@@ -141,16 +144,28 @@ Run with defaults:
 python scripts/training/train_singleshot_pso.py
 ```
 
-## 3) Evaluation
+</details>
+
+<details>
+<summary>
+<h2>3) Evaluation</h2>
+</summary>
 
 See [docs/evaluation.md](docs/evaluation.md) for how to run the evaluation
 script and interpret its outputs.
 
 Take a look at the notebooks folder for visualizations.
 
-## 4) Extending the system
+</details>
+
+<details>
+<summary>
+<h2>4) Extending the system</h2>
+</summary>
 
 See [docs/pretraining.md](docs/pretraining.md) and [docs/finetuning.md](docs/finetuning.md) on how to add new backbones, PSOs or datasets.
+
+</details>
 
 ## Notes
 
