@@ -3,5 +3,5 @@ name: vsac_singleshot
 
 actor:
   # NEW format (recommended) - auto-loads params from experiment config
-  experiment_dir: experiments/important/basemodel_pretrained_640k  # experiments/pretraining/20260223_164118_actor_basemodel_640k_actualwbce  # experiments/important/basemodel_pretrained_640k  # 20260127_011142_actor_basemodel_640k_wbce
+  experiment_dir: experiments/pretraining/basemodel_pretrained_640k  # experiments/pretraining/20260223_164118_actor_basemodel_640k_actualwbce  # experiments/important/basemodel_pretrained_640k  # 20260127_011142_actor_basemodel_640k_wbce
   use_weights: true
