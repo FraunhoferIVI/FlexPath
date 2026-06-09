@@ -5,6 +5,12 @@ If you want to only retrain, extend our model or work with the semantic objectiv
 
 ## Environment
 
+**Compilation dependencies:**:
+```bash
+apt install g++
+```
+(for cstar dependency and torch.compile)
+
 **Python dependencies:**
 Option 1 (uv):
 ```bash
@@ -17,12 +23,6 @@ python -m venv .venv
 source .venv/bin/activate
 pip install .
 ```
-
-**Compilation dependencies:**:
-```bash
-apt install gcc
-```
-(for torch.compile)
 
 ## Download Checkpoints:
 
