@@ -3,7 +3,8 @@ name = "training"
 version = "0.2.0"
 description = ""
 authors = [
-    { name = "Anonymous", email = "" },
+    { name = "Tim Schönbrod", email = "tim.schoenbrod@ivi.fraunhofer.de"},
+    { name = "Taehyoung Kim", email = "taehyoung.kim@ivi.fraunhofer.de"}
 ]
 requires-python = ">=3.9, <3.10"
 readme = "README.md"
@@ -32,4 +33,4 @@ dependencies = [
 ]
 
 [tool.uv.sources]
-cstar = { path = "/home/jovyan/cstar"}
+cstar = { git = "https://github.com/FraunhoferIVI/cstar.git", rev = "e5782a5953134f6a6e458cdf0f9c2bf7424d5c11" }
