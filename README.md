@@ -167,13 +167,13 @@ See [docs/pretraining.md](docs/pretraining.md) and [docs/finetuning.md](docs/fin
 
 ## Citation
 ```bibtex
-@misc{FlexPath2026,
-  title         = {FlexPath: Learned Semantic Path Priors for Image-Based Planning},
-  author        = {Taehyoung Kim and Tim Sch{\"o}nbrod and David Eckel and Henri Mee{\ss}},
-  year          = {2026},
-  eprint        = {2026.00000},
-  archivePrefix = {arXiv},
-  primaryClass  = {cs.CV},
-  url           = {https://arxiv.org/abs/2026.00000}
+@misc{kim2026flexpathlearnedsemanticpath,
+      title={FlexPath: Learned Semantic Path Priors for Image-Based Planning}, 
+      author={Taehyoung Kim and Tim Schoenbrod and David Eckel and Henri Meeß},
+      year={2026},
+      eprint={2606.10167},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2606.10167}, 
 }
 ```
