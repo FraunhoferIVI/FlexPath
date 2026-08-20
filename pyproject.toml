@@ -25,8 +25,5 @@ dependencies = [
     "matplotlib>=3.9.4",
     "ipykernel>=6.31.0",
     "zarr>=2.18.2",
-    "cstar"
+    "cstar-pathfinding==0.1.0"
 ]
-
-[tool.uv.sources]
-cstar = { git = "https://github.com/FraunhoferIVI/cstar.git", rev = "e5782a5953134f6a6e458cdf0f9c2bf7424d5c11" }

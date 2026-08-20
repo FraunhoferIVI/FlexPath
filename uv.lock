@@ -259,31 +259,16 @@ wheels = [
 ]
 
 [[package]]
-name = "cstar"
-version = "1.0.0"
-source = { directory = "/home/jovyan/cstar" }
+name = "cstar-pathfinding"
+version = "0.1.0"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "numpy" },
 ]
-
-[package.metadata]
-requires-dist = [
-    { name = "exceptiongroup", marker = "extra == 'dev'" },
-    { name = "imageio", marker = "extra == 'dev'" },
-    { name = "iniconfig", marker = "extra == 'dev'" },
-    { name = "numpy", specifier = ">=2.0.2" },
-    { name = "packaging", marker = "extra == 'dev'" },
-    { name = "pathfinding", marker = "extra == 'dev'" },
-    { name = "pillow", marker = "extra == 'dev'" },
-    { name = "pluggy", marker = "extra == 'dev'" },
-    { name = "pyastar2d", marker = "extra == 'dev'" },
-    { name = "pybind11", marker = "extra == 'dev'" },
-    { name = "pygments", marker = "extra == 'dev'" },
-    { name = "pytest", marker = "extra == 'dev'" },
-    { name = "tomli", marker = "extra == 'dev'" },
-    { name = "typing-extensions", marker = "extra == 'dev'" },
+sdist = { url = "https://files.pythonhosted.org/packages/77/1f/e4881512ce0abad8e02898c42d8c8f79ebe25768ce881715db72c3db85c9/cstar_pathfinding-0.1.0.tar.gz", hash = "sha256:077ff1d50182cc9dd271a79ed7ee4da3cb7d183756106e80cc11d32211f11ebc", size = 25685, upload-time = "2026-06-09T16:20:49.742Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e8/4c/284a0073addabe5fcb1965e7a17d0f120dda8386379d54934721ba417fc4/cstar_pathfinding-0.1.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:bfbad8f5e4bab1d163b07910b35b16b0f48b435aa4dd8cd7166f58288e8b8246", size = 417652, upload-time = "2026-06-09T16:20:48.392Z" },
 ]
-provides-extras = ["dev"]
 
 [[package]]
 name = "cycler"
@@ -417,6 +402,45 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/40/bb/0ab3e58d22305b6f5440629d20683af28959bf793d98d11950e305c1c326/filelock-3.19.1.tar.gz", hash = "sha256:66eda1888b0171c998b35be2bcc0f6d75c388a7ce20c3f3f37aa8e96c2dddf58", size = 17687, upload-time = "2025-08-14T16:56:03.016Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/42/14/42b2651a2f46b022ccd948bca9f2d5af0fd8929c4eec235b8d6d844fbe67/filelock-3.19.1-py3-none-any.whl", hash = "sha256:d38e30481def20772f5baf097c122c3babc4fcdb7e14e57049eb9d88c6dc017d", size = 15988, upload-time = "2025-08-14T16:56:01.633Z" },
+]
+
+[[package]]
+name = "flexpath"
+version = "1.0.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "albumentations" },
+    { name = "cstar-pathfinding" },
+    { name = "datasets" },
+    { name = "evaluate" },
+    { name = "huggingface-hub" },
+    { name = "hydra-core" },
+    { name = "ipykernel" },
+    { name = "matplotlib" },
+    { name = "omegaconf" },
+    { name = "pyyaml" },
+    { name = "tensorboard" },
+    { name = "torchvision" },
+    { name = "transformers" },
+    { name = "zarr" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "albumentations", specifier = ">=2.0.8" },
+    { name = "cstar-pathfinding", specifier = "==0.1.0" },
+    { name = "datasets", specifier = ">=4.1.1" },
+    { name = "evaluate", specifier = ">=0.4.6" },
+    { name = "huggingface-hub", specifier = ">=0.19.0" },
+    { name = "hydra-core", specifier = ">=1.3.0" },
+    { name = "ipykernel", specifier = ">=6.31.0" },
+    { name = "matplotlib", specifier = ">=3.9.4" },
+    { name = "omegaconf", specifier = ">=2.3.0" },
+    { name = "pyyaml", specifier = ">=6.0.3" },
+    { name = "tensorboard", specifier = ">=2.14.0" },
+    { name = "torchvision", specifier = ">=0.23.0" },
+    { name = "transformers", specifier = ">=4.56.0" },
+    { name = "zarr", specifier = ">=2.18.2" },
 ]
 
 [[package]]
@@ -1686,45 +1710,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/a8/4b/29b4ef32e036bb34e4ab51796dd745cdba7ed47ad142a9f4a1eb8e0c744d/tqdm-4.67.1.tar.gz", hash = "sha256:f8aef9c52c08c13a65f30ea34f4e5aac3fd1a34959879d7e59e63027286627f2", size = 169737, upload-time = "2024-11-24T20:12:22.481Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/d0/30/dc54f88dd4a2b5dc8a0279bdd7270e735851848b762aeb1c1184ed1f6b14/tqdm-4.67.1-py3-none-any.whl", hash = "sha256:26445eca388f82e72884e0d580d5464cd801a3ea01e63e5601bdff9ba6a48de2", size = 78540, upload-time = "2024-11-24T20:12:19.698Z" },
-]
-
-[[package]]
-name = "training"
-version = "0.2.0"
-source = { virtual = "." }
-dependencies = [
-    { name = "albumentations" },
-    { name = "cstar" },
-    { name = "datasets" },
-    { name = "evaluate" },
-    { name = "huggingface-hub" },
-    { name = "hydra-core" },
-    { name = "ipykernel" },
-    { name = "matplotlib" },
-    { name = "omegaconf" },
-    { name = "pyyaml" },
-    { name = "tensorboard" },
-    { name = "torchvision" },
-    { name = "transformers" },
-    { name = "zarr" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "albumentations", specifier = ">=2.0.8" },
-    { name = "cstar", directory = "/home/jovyan/cstar" },
-    { name = "datasets", specifier = ">=4.1.1" },
-    { name = "evaluate", specifier = ">=0.4.6" },
-    { name = "huggingface-hub", specifier = ">=0.19.0" },
-    { name = "hydra-core", specifier = ">=1.3.0" },
-    { name = "ipykernel", specifier = ">=6.31.0" },
-    { name = "matplotlib", specifier = ">=3.9.4" },
-    { name = "omegaconf", specifier = ">=2.3.0" },
-    { name = "pyyaml", specifier = ">=6.0.3" },
-    { name = "tensorboard", specifier = ">=2.14.0" },
-    { name = "torchvision", specifier = ">=0.23.0" },
-    { name = "transformers", specifier = ">=4.56.0" },
-    { name = "zarr", specifier = ">=2.18.2" },
 ]
 
 [[package]]

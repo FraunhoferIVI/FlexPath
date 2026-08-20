@@ -63,7 +63,7 @@ pip install .
 ### Download Checkpoints:
 
 ```bash
-curl -L -o experiments.zip https://owncloud.fraunhofer.de/index.php/s/pvO2lJaNFI1IOId/download
+curl -L -o experiments.zip https://owncloud.fraunhofer.de/index.php/s/txWP34AQoYTi8Sb/download
 unzip experiments.zip
 ```
 
@@ -167,8 +167,8 @@ See [docs/pretraining.md](docs/pretraining.md) and [docs/finetuning.md](docs/fin
 
 ## Citation
 ```bibtex
-@misc{kim2026flexpathlearnedsemanticpath,
-      title={FlexPath: Learned Semantic Path Priors for Image-Based Planning}, 
+@misc{kim2026flexpathadaptinglearnedconn,
+      title={FlexPath: Adapting Learned Connectivity Guidance to Path Preferences}, 
       author={Taehyoung Kim and Tim Schoenbrod and David Eckel and Henri Meeß},
       year={2026},
       eprint={2606.10167},
