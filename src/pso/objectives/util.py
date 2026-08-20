@@ -29,6 +29,8 @@ def is_collision(
 
     """
 
+    Collision PSO
+
     Parameters
     - path_pred: torch.Tensor, shape [B,1,H,W], values in [0,1]
         Predicted path heatmap per batch.
@@ -66,6 +68,7 @@ def is_connected(
 ):
 
     """
+    Sub-Optimal Connectivity PSO
 
     Parameters
     - path_pred: torch.Tensor, shape [B,1,H,W], values in [0,1]
@@ -157,6 +160,7 @@ def compute_soft_obstacle_distances(
 ):
 
     """
+    Obstacle-Clearance PSO
 
     Parameters
     - path_pred: torch.Tensor, shape [B,1,H,W]
@@ -184,42 +188,34 @@ def compute_soft_obstacle_distances(
     B, _, H, W = path_pred.shape
     device = path_pred.device
 
-    # Sum over pixels in path_pred per batch: [B]
-    pixel_sums = torch.sum(path_pred, dim=(1, 2, 3))
+    k = int(desired_min_dist - 1)
+    kernelkwidth = int(2 * k + 1)
 
-    # 1. Coordinate grid normalized to [0,1]; coords: [H,W,2]
-    if (H, W) not in DISTS_CACHE.keys():
-        yy = torch.linspace(0, 1, H, device=device)
-        xx = torch.linspace(0, 1, W, device=device)
-        yy, xx = torch.meshgrid(yy, xx, indexing='ij')
-        coords = torch.stack([yy, xx], dim=-1)  # [H,W,2]
-        
-        
-        # Flatten coords for obstacle points: [HW,2]
-        coords_flat = coords.reshape(-1, 2)             # [HW,2]
+    m_p = F.pad(
+        obstacle_grid,
+        pad=(k, k, k, k),  # (left, right, top, bottom)
+        mode="constant",
+        value=0
+    )
 
-        # Reshape coords for pairwise computations:
-        # path_coords: [1,1,H,W,2]  ; obstacle_coords: [1,1,1,1,HW,2]
-        path_coords = coords.reshape(1, 1, H, W, 2)      # [1,1,H,W,2]
-        obstacle_coords = coords_flat.reshape(1, 1, 1, 1, -1, 2)  # [1,1,1,1,HW,2]
+    patches = F.unfold(m_p, kernel_size=kernelkwidth, padding=0)
+    patches = patches.view(B, 1, kernelkwidth*kernelkwidth, H*W)
 
-        # 2. Pairwise distances: subtract and norm -> [B,1,H,W,HW]
-        DISTS_CACHE[(H, W)] = ((path_coords.unsqueeze(4) - obstacle_coords)**2).sum(-1).sqrt()
-            
-    dists = DISTS_CACHE[(H, W)]
+    y, x = torch.meshgrid(
+        torch.arange(kernelkwidth, device=device),
+        torch.arange(kernelkwidth, device=device),
+        indexing="ij",
+    )
 
-    # obstacle_flat: [B,1,HW]
-    obstacle_flat = obstacle_grid.reshape(B, 1, -1) # [B,1,HW]
+    _coords = torch.stack((x, y), dim=-1)
 
-    # 3. Obstacle weighting: [B,1,1,1,HW]
-    obstacle_w = obstacle_flat.unsqueeze(2).unsqueeze(2)   # [B,1,1,1,HW]
+    dist_to_center = torch.sqrt(torch.sum((_coords - torch.tensor([k, k], dtype=torch.float32, device=device).view(1, 1, 2)) ** 2, dim=-1, keepdim=False)).view(1, 1, kernelkwidth*kernelkwidth, 1)
 
-    # Mask non-obstacle distances with a large value so they don't affect soft-min
-    masked_dists = dists * obstacle_w + (1 - obstacle_w) * 1e6
+    ranged_distances = patches * dist_to_center + (1 - patches) * 1e6
+    
+    d_closest_obstacle = -torch.logsumexp(-tau * ranged_distances, dim=-2) / tau  # [B,1,H,W]
+    d_closest_obstacle = d_closest_obstacle.view(B, 1, H, W)
 
-    # 4. Softmin over obstacle dimension:
-    # Multiply distances by (H+W)/2 to scale with grid size before applying soft-min (tau temp)
-    d_closest_obstacle = -torch.logsumexp(-tau * masked_dists * ((H + W) / 2), dim=-1) / tau  # [B,1,H,W]
 
     # 5. Penalty: how much closer than desired_min_dist each pixel is
     proximity = F.relu(desired_min_dist - d_closest_obstacle)  # [B,1,H,W]
@@ -228,8 +224,8 @@ def compute_soft_obstacle_distances(
     proximity_norm = proximity / desired_min_dist
     penalty = proximity_norm * path_pred  # [B,1,H,W]
 
-    # Mean penalty scaled by number of path pixels (pixel_sums: [B])
-    mean_penalty = penalty.mean(dim=(2, 3)) * pixel_sums.view(-1, 1)  # [B,1]
+    # Mean and max penalty
+    mean_penalty = penalty.mean(dim=(2, 3))  # [B,1]
     max_penalty  = penalty.amax(dim=(2, 3))  # [B,1]
 
     return -mean_penalty, -max_penalty
@@ -241,6 +237,7 @@ def compute_path_cost_approximation(
 ):
 
     """
+    Cost minimization PSO
 
     Parameters
     - path: torch.Tensor, shape [B,1,H,W]
@@ -295,9 +292,6 @@ def compute_path_cost_approximation(
 
     return aprox_path_pixel_cost
 
-def exp_ease_in(x: torch.Tensor, a=4):
-    return (1 - torch.exp(-a*(x**2))) / 1 - math.exp(-a)
-
 
 def soft_optimal_connectivity(
     path_pred: torch.Tensor,
@@ -308,6 +302,11 @@ def soft_optimal_connectivity(
     sharpness_start: int = 8.0,
     sharpness_end: int = 16.0,
 ):
+
+    """
+    Optimal Connectivity PSO
+    """
+    
     B, _, H, W = path_pred.shape
 
     # Extract start and end coordinates using argmax along spatial dimensions
