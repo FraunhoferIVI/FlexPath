@@ -1,4 +1,4 @@
-# FlexPath: Learned Semantic Path Priors for Image-Based Planning
+# FlexPath: Adapting Learned Connectivity Guidance to Path Preferences
 
 ## TL;DR
 
