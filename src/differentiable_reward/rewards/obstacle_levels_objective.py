@@ -167,17 +167,12 @@ def reward_obstacle_levels_with_cost_penalty(
         path=predicted_path
     )
 
-    target_cost_map = compute_path_cost_approximation(
-        path=target_path
-    )
-
     pred_cost = torch.sum(pred_cost_map, dim=(1, 2, 3))  # [B, 1]
-    target_cost = torch.sum(target_cost_map, dim=(1, 2, 3))  # [B, 1]
 
     max_possible_cost = state.size(-1) * state.size(-2) * math.sqrt(2)
-    pixel_sum_penalty = -torch.abs(target_cost - pred_cost) / max_possible_cost
+    pixel_sum_penalty = -pred_cost / max_possible_cost
 
-    final_reward = _is_connected * (1 - _is_collision.view(-1)) + obstacle_penalty_scaling * obstacle_penalty.view(-1) + pixel_sum_penalty_scale * pixel_sum_penalty
+    final_reward = _is_connected + (1 - _is_collision.view(-1)) + obstacle_penalty_scaling * obstacle_penalty.view(-1) + pixel_sum_penalty_scale * pixel_sum_penalty
 
     return final_reward, torch.stack(
         [

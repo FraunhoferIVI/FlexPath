@@ -126,19 +126,12 @@ def reward_waypoint(
         path=predicted_path
     )
 
-    target_cost_map = compute_path_cost_approximation(
-        path=target_path
-    )
-
     pred_cost = torch.sum(pred_cost_map, dim=(1, 2, 3))  # [B, 1]
-    target_cost = torch.sum(target_cost_map, dim=(1, 2, 3))  # [B, 1]
 
     # pixel_sum_penalty = -torch.clamp(1 - (target_pixel_sum + eps) / (pred_pixel_sum + eps), min=0.0, max=1.0)
     # pixel_penalty = -torch.clamp((torch.abs(target_cost - pred_cost) + eps) / (2 * target_cost + eps), min=0.0, max=1.0)
     max_possible_cost = state.size(-1) * state.size(-2) * math.sqrt(2)
-    pixel_penalty = -torch.abs(target_cost - pred_cost) / max_possible_cost
-
-    # print(pixel_sum_penalty_scale)
+    pixel_penalty = -pred_cost / max_possible_cost
 
     return (
         _is_connected * (1 - _is_collision) + obstacle_penalty_scaling * obstacle_penalty + pixel_sum_penalty_scale * pixel_penalty, 

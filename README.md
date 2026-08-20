@@ -1,4 +1,4 @@
-# FlexPath 2D
+# FlexPath: Adapting Learned Connectivity Guidance to Path Preferences
 
 This branch provides the full development repo with all utils and baselines. Documentation is tailored for evaluating and retraining all models (shortest-path objective). 
 If you want to only retrain, extend our model or work with the semantic objectives we recommend the **main** branch as it contains much more detailled on retraining and extending our model.
@@ -27,7 +27,7 @@ pip install .
 ## Download Checkpoints:
 
 ```bash
-curl -L -o experiments.zip https://owncloud.fraunhofer.de/index.php/s/pvO2lJaNFI1IOId/download
+curl -L -o experiments.zip https://owncloud.fraunhofer.de/index.php/s/txWP34AQoYTi8Sb/download
 unzip experiments.zip
 ```
 

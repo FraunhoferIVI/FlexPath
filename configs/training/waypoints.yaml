@@ -12,7 +12,7 @@ hyperparams:
     pixel_penalty_scaling_start_step: 0
     pixel_penalty_scaling_start_val: 0.01
     pixel_penalty_scaling_stop_val: 0.5
-    obstacle_penalty_scaling: 0.1
+    obstacle_penalty_scaling: 0.0
 
 # Strategy and hyperparameters related to exploration (not used anymore, strategy v0 = no exploration)
 exploration:

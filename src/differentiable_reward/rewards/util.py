@@ -284,6 +284,7 @@ def compute_soft_obstacle_distances(
 ):
 
     """
+    Obstacle-Clearance PSO
 
     Parameters
     - path_pred: torch.Tensor, shape [B,1,H,W]
@@ -304,64 +305,41 @@ def compute_soft_obstacle_distances(
     Short description
     - Computes a differentiable estimate of the distance from each path pixel to the nearest
       obstacle using a soft-min over obstacle distances, then penalizes pixels closer than
-      desired_min_dist.
-
-    Detailed steps
-    1. Build a normalized coordinate grid coords with values in [0,1] for numerical stability.
-       coords shape: [H,W,2].
-    2. Flatten coordinates for obstacles to compute pairwise distances between every path pixel
-       and every obstacle pixel.
-    3. Compute pairwise Euclidean distances dists of shape [B,1,H,W,HW].
-    4. Mask distances with obstacle presence: masked_dists = dists * obstacle_w + (1 - obstacle_w) * large_value.
-       This ensures non-obstacle locations don't affect the soft-min.
-    5. Apply a softmin (via log-sum-exp) over the obstacle dimension to get a differentiable
-       approximation of the minimum distance to any obstacle: d_closest_obstacle -> [B,1,H,W].
-       The factor ((H+W)/2) rescales distances relative to grid size.
-    6. Compute proximity = ReLU(desired_min_dist - d_closest_obstacle) and normalize by desired_min_dist.
-    7. Weight proximity by path_pred to focus penalty only on path pixels.
-    8. Compute mean and max penalties; mean is multiplied by pixel count to retain scale.
+      desired_min_dist
 
     """
 
     B, _, H, W = path_pred.shape
     device = path_pred.device
 
-    # Sum over pixels in path_pred per batch: [B]
-    pixel_sums = torch.sum(path_pred, dim=(1, 2, 3))
+    k = int(desired_min_dist - 1)
+    kernelkwidth = int(2 * k + 1)
 
-    # 1. Coordinate grid normalized to [0,1]; coords: [H,W,2]
-    if (H, W) not in DISTS_CACHE.keys():
-        yy = torch.linspace(0, 1, H, device=device)
-        xx = torch.linspace(0, 1, W, device=device)
-        yy, xx = torch.meshgrid(yy, xx, indexing='ij')
-        coords = torch.stack([yy, xx], dim=-1)  # [H,W,2]
-        
-        
-        # Flatten coords for obstacle points: [HW,2]
-        coords_flat = coords.reshape(-1, 2)             # [HW,2]
+    m_p = F.pad(
+        obstacle_grid,
+        pad=(k, k, k, k),  # (left, right, top, bottom)
+        mode="constant",
+        value=0
+    )
 
-        # Reshape coords for pairwise computations:
-        # path_coords: [1,1,H,W,2]  ; obstacle_coords: [1,1,1,1,HW,2]
-        path_coords = coords.reshape(1, 1, H, W, 2)      # [1,1,H,W,2]
-        obstacle_coords = coords_flat.reshape(1, 1, 1, 1, -1, 2)  # [1,1,1,1,HW,2]
+    patches = F.unfold(m_p, kernel_size=kernelkwidth, padding=0)
+    patches = patches.view(B, 1, kernelkwidth*kernelkwidth, H*W)
 
-        # 2. Pairwise distances: subtract and norm -> [B,1,H,W,HW]
-        DISTS_CACHE[(H, W)] = ((path_coords.unsqueeze(4) - obstacle_coords)**2).sum(-1).sqrt()
-            
-    dists = DISTS_CACHE[(H, W)]
+    y, x = torch.meshgrid(
+        torch.arange(kernelkwidth, device=device),
+        torch.arange(kernelkwidth, device=device),
+        indexing="ij",
+    )
 
-    # obstacle_flat: [B,1,HW]
-    obstacle_flat = obstacle_grid.reshape(B, 1, -1) # [B,1,HW]
+    _coords = torch.stack((x, y), dim=-1)
 
-    # 3. Obstacle weighting: [B,1,1,1,HW]
-    obstacle_w = obstacle_flat.unsqueeze(2).unsqueeze(2)   # [B,1,1,1,HW]
+    dist_to_center = torch.sqrt(torch.sum((_coords - torch.tensor([k, k], dtype=torch.float32, device=device).view(1, 1, 2)) ** 2, dim=-1, keepdim=False)).view(1, 1, kernelkwidth*kernelkwidth, 1)
 
-    # Mask non-obstacle distances with a large value so they don't affect soft-min
-    masked_dists = dists * obstacle_w + (1 - obstacle_w) * 1e6
+    ranged_distances = patches * dist_to_center + (1 - patches) * 1e6
+    
+    d_closest_obstacle = -torch.logsumexp(-tau * ranged_distances, dim=-2) / tau  # [B,1,H,W]
+    d_closest_obstacle = d_closest_obstacle.view(B, 1, H, W)
 
-    # 4. Softmin over obstacle dimension:
-    # Multiply distances by (H+W)/2 to scale with grid size before applying soft-min (tau temp)
-    d_closest_obstacle = -torch.logsumexp(-tau * masked_dists * ((H + W) / 2), dim=-1) / tau  # [B,1,H,W]
 
     # 5. Penalty: how much closer than desired_min_dist each pixel is
     proximity = F.relu(desired_min_dist - d_closest_obstacle)  # [B,1,H,W]
@@ -370,8 +348,8 @@ def compute_soft_obstacle_distances(
     proximity_norm = proximity / desired_min_dist
     penalty = proximity_norm * path_pred  # [B,1,H,W]
 
-    # Mean penalty scaled by number of path pixels (pixel_sums: [B])
-    mean_penalty = penalty.mean(dim=(2, 3)) * pixel_sums.view(-1, 1)  # [B,1]
+    # Mean and max penalty
+    mean_penalty = penalty.mean(dim=(2, 3))  # [B,1]
     max_penalty  = penalty.amax(dim=(2, 3))  # [B,1]
 
     return -mean_penalty, -max_penalty
