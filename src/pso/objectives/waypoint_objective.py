@@ -43,14 +43,9 @@ def reward_waypoint_mindist(
         path=predicted_path
     )
 
-    target_cost_map = compute_path_cost_approximation(
-        path=target_path
-    )
-
     pred_cost = torch.sum(pred_cost_map, dim=(1, 2, 3))  # [B, 1]
-    target_cost = torch.sum(target_cost_map, dim=(1, 2, 3))  # [B, 1]
 
     max_possible_cost = state.size(-1) * state.size(-2) * math.sqrt(2)
-    pixel_penalty = -torch.abs(target_cost - pred_cost) / max_possible_cost
+    pixel_penalty = -pred_cost / max_possible_cost
 
     return connectivity_scaling * _is_connected + collision_scale * (1 - _is_collision) + pixel_sum_penalty_scale * pixel_penalty, torch.stack([_is_connected.view(-1), _is_collision.view(-1), pixel_penalty.view(-1)])
