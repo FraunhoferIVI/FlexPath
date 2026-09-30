@@ -105,3 +105,6 @@ lightning_logs/
 
 # Config overrides (personal configs)
 configs/local/
+
+!configs/data
+!configs/pretraining/data

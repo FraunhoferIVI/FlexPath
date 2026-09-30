@@ -86,6 +86,25 @@ curl -L -o starcraft_6k.zip https://owncloud.fraunhofer.de/index.php/s/51Dc4CPEw
 unzip starcraft_6k.zip
 ```
 
+### 256x256 
+
+If you are interested in 256x256 checkpoints, you can download them from here. We pretrained and finetuned a model on the shortest-path objective, the exact configuration can be found in the corresponding config file within the experiment directory.
+
+```bash
+# checkpoints
+curl -L -o 256x256_experiments.zip https://owncloud.fraunhofer.de/s/64nI0v2AwIrc11i/download
+unzip 256x256_experiments.zip
+mv basemodel_pretrained_256x256_64k experiments/pretraining/basemodel_pretrained_256x256_64k
+mv basemodel_mindist_256x256_64k experiments/runs/basemodel_mindist_256x256_64k
+
+# data
+curl -L -o TMP_64k256x256_rgb.zip https://owncloud.fraunhofer.de/s/fcDJv8sDjLcLadi/download
+unzip TMP_64k256x256_rgb.zip
+mv TMP_64k256x256_rgb data/TMP_64k256x256_rgb
+```
+
+The used dataset is a 256x256 variant of TMP with 64k samples (51.2k/6.4k/6.4k split).
+
 # Generate semantic dataset extensions
 
 This is only required if you want to retrain or evaluate the waypoint/semantic obstacle avoidance objectives.
