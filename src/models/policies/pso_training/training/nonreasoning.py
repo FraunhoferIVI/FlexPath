@@ -247,7 +247,7 @@ def train_step(
 
     with autocast(dtype=amp_dtype, enabled=enable_amp, device_type=device):
         # Action by the current actor for the sampled state
-        actions, _ = policy(X)
+        actions, _ = torch.tanh(policy(X))
         
         with autocast(enabled=False, device_type=device):
             thresholded_actions_pi = (actions + 1) / 2
@@ -313,7 +313,7 @@ def eval_step(
 
     # Action by the current actor for the sampled state
     with autocast(dtype=amp_dtype, enabled=enable_amp, device_type=device):
-        actions, _ = policy(X)
+        actions, _ = torch.tanh(policy(X))
         actions = actions.reshape(-1, 1, *X.shape[2:])
         
         with autocast(enabled=False, device_type=device):
